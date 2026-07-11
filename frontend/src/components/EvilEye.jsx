@@ -167,6 +167,7 @@ export default function EvilEye({
   backgroundColor = '#000000'
 }) {
   const containerRef = useRef(null);
+  const programRef = useRef(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -236,6 +237,8 @@ export default function EvilEye({
         uBgColor: { value: hexToVec3(backgroundColor) }
       }
     });
+    
+    programRef.current = program;
 
     const mesh = new Mesh(gl, { geometry, program });
     container.appendChild(gl.canvas);
@@ -260,6 +263,22 @@ export default function EvilEye({
       container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
+  }, []); // Run only once to prevent WebGL canvas destruction!
+
+  // Update uniforms dynamically without destroying the canvas
+  useEffect(() => {
+    if (programRef.current) {
+      programRef.current.uniforms.uIntensity.value = intensity;
+      programRef.current.uniforms.uPupilSize.value = pupilSize;
+      programRef.current.uniforms.uIrisWidth.value = irisWidth;
+      programRef.current.uniforms.uGlowIntensity.value = glowIntensity;
+      programRef.current.uniforms.uScale.value = scale;
+      programRef.current.uniforms.uNoiseScale.value = noiseScale;
+      programRef.current.uniforms.uPupilFollow.value = pupilFollow;
+      programRef.current.uniforms.uFlameSpeed.value = flameSpeed;
+      programRef.current.uniforms.uEyeColor.value = hexToVec3(eyeColor);
+      programRef.current.uniforms.uBgColor.value = hexToVec3(backgroundColor);
+    }
   }, [eyeColor, intensity, pupilSize, irisWidth, glowIntensity, scale, noiseScale, pupilFollow, flameSpeed, backgroundColor]);
 
   return <div ref={containerRef} className="evil-eye-container" />;

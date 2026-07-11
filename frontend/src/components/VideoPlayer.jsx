@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import EvilEye from './EvilEye';
 
-const VIDEOS = [
-  'http://localhost:8000/samples/normal_traffic.mp4',
-  'http://localhost:8000/samples/massive_flock_birds.mp4',
-  'http://localhost:8000/samples/fire_room.mp4',
-  'http://localhost:8000/samples/road_collision.mp4'
+const PLAYLIST = [
+  'normal_traffic.mp4',
+  'earthquake.mp4',
+  'mall_footfall.mp4',
+  'car_fire.mp4'
 ];
 
-export default function VideoPlayer({ streamUrl, isConnected, latestAlert }) {
+export default function VideoPlayer({ streamUrl, isConnected, isMockMode, latestAlert }) {
   const [expanded, setExpanded] = useState(false);
   
   useEffect(() => {
@@ -48,14 +48,17 @@ export default function VideoPlayer({ streamUrl, isConnected, latestAlert }) {
         <div className="w-full h-full relative">
           {/* 2x2 Grid */}
           <div className={`w-full h-full grid grid-cols-2 grid-rows-2 transition-all duration-700 ease-in-out ${expanded ? 'opacity-0 scale-150 pointer-events-none' : 'opacity-100 scale-100'}`}>
-            {VIDEOS.map((vid, idx) => (
-              <div key={idx} className={`relative border border-gray-800 ${vid === streamUrl ? 'ring-2 ring-ocular-cyan ring-inset' : ''}`}>
-                <video src={vid} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            {PLAYLIST.map((filename, idx) => {
+              const vidUrl = isMockMode ? `/samples/${filename}` : `http://localhost:8000/samples/${filename}`;
+              return (
+              <div key={idx} className={`relative border border-gray-800 ${vidUrl === streamUrl ? 'ring-2 ring-ocular-cyan ring-inset' : ''}`}>
+                <video src={vidUrl} autoPlay muted loop playsInline className="w-full h-full object-cover" />
                 <div className="absolute bottom-2 left-2 bg-black/70 px-2 py-1 text-[10px] text-gray-400 font-mono">
                   CAM 0{idx + 1}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Expanded Video Overlay */}

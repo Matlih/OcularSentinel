@@ -1,0 +1,46 @@
+graph TD
+    %% Styling
+    classDef frontend fill:#0f172a,stroke:#06b6d4,stroke-width:2px,color:#fff;
+    classDef backend fill:#1e293b,stroke:#64748b,stroke-width:2px,color:#fff;
+    classDef ai fill:#7f1d1d,stroke:#ef4444,stroke-width:2px,color:#fff;
+    classDef vlm fill:#14532d,stroke:#22c55e,stroke-width:2px,color:#fff;
+    classDef tunnel fill:#4c1d95,stroke:#8b5cf6,stroke-width:2px,color:#fff;
+
+    subgraph Frontend ["Frontend: C4ISR Command Center (React/Vite)"]
+        UI[Dashboard UI & State]:::frontend
+        WS_Client[WebSocket Client]:::frontend
+        VideoGrid[2x2 Video Player]:::frontend
+        Alerts[Analytics & Alert Panel]:::frontend
+        
+        UI --- WS_Client
+        UI --- VideoGrid
+        UI --- Alerts
+    end
+
+    subgraph EdgeBackend ["Backend: Edge Node (FastAPI / Python)"]
+        API[FastAPI Web Server]:::backend
+        WS_Manager[WebSocket Manager]:::backend
+        YOLO[YOLO11n Tripwire Engine]:::ai
+        Buffer[(90-Frame Video Buffer)]:::backend
+        LocalCCTV[(Local CCTV / MP4 Feeds)]:::backend
+        
+        API --- WS_Manager
+        WS_Manager <-->|Real-Time Telemetry| WS_Client
+        LocalCCTV -->|Frame Streaming| YOLO
+        YOLO -->|Continuous Push| Buffer
+    end
+
+    subgraph CloudGPU ["Cloud Node (AMD ROCm / Jupyter)"]
+        Ngrok[Ngrok Secure Tunnel]:::tunnel
+        VLM[Qwen2-VL Multimodal Model]:::vlm
+        
+        Ngrok -->|Forwards Request| VLM
+    end
+
+    %% Anomaly Trigger Flow
+    YOLO -->|1. Threat Detected| API
+    Buffer -->|2. Extract anomaly.mp4| API
+    API -->|3. HTTP POST Video| Ngrok
+    VLM -->|4. JSON Incident Report| API
+    API -->|5. Broadcast JSON| WS_Manager
+    WS_Manager -->|6. Trigger UI Alert| Alerts
