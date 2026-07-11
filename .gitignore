@@ -32,9 +32,6 @@ share/python-wheels/
 .ipynb_checkpoints/
 
 # Video/Media Assets & Models
-backend/samples/*.mp4
-backend/samples/*.m4a
-!backend/samples/normal_traffic.mp4
 backend/anomaly.mp4
 backend/yolo11n.pt
 
