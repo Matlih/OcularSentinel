@@ -12,6 +12,14 @@ Ocular Sentinel is built as a flexible **B2B (Business-to-Business)** and **B2G 
 ## Total Addressable Market (TAM)
 The intersection of Edge AI and Video Analytics targets a massive and rapidly expanding market. The global Video Surveillance market is projected to reach **$83.3 Billion by 2030**, while the broader AI in Computer Vision market is expected to surpass **$200 Billion by 2030**. Ocular Sentinel captures value across these sectors by drastically reducing the human capital required for 24/7 C4ISR (Command, Control, Communications, Computers, Intelligence, Surveillance, and Reconnaissance) monitoring.
 
+## Why VLM Instead of Traditional CV?
+Traditional Computer Vision (CV) pipelines rely on narrowly trained classification models (like YOLO or ResNet) that can only detect what they have been explicitly trained to see (e.g., "Person", "Car", "Backpack"). They lack **contextual reasoning**.
+
+By integrating a **Vision-Language Model (VLM)** like Qwen2-VL, Ocular Sentinel achieves true cognitive surveillance:
+1. **Zero-Shot Anomaly Detection**: A VLM doesn't need to be pre-trained on an "Earthquake" or "Store Robbery" bounding box dataset. It intuitively understands that a building shaking or a person wielding a knife is a threat through zero-shot contextual reasoning.
+2. **Tactical Reporting**: Instead of merely outputting a bounding box labeled `person: 0.95`, the VLM synthesizes the entire scene, describing the severity of the threat, the environment, and recommending human-readable tactical actions.
+3. **Conversational C4ISR**: Operators can dynamically query the system ("Is anyone trapped in the vehicle?", "Are the suspects armed?") rather than relying on static dashboard metrics.
+
 ## Architecture
 - **Frontend**: React (Vite) + Tailwind CSS dashboard providing a cyberpunk-styled command center.
 - **Backend**: FastAPI (Python) managing WebSockets, the YOLO inference thread, and video streaming.
