@@ -1,5 +1,14 @@
 # Ocular Sentinel
 
+> **🏆 Built for the AMD Developer Hackathon: Act II — Track 3 (Unicorn Track)**  
+> *Developed independently from scratch in 24 hours.*
+
+<div align="center">
+  <img src="docs/eye_boot.gif" alt="Ocular Sentinel Boot Sequence" width="800"/>
+  <br/><br/>
+  <img src="docs/dashboard.gif" alt="C4ISR Dashboard Live Demo" width="800"/>
+</div>
+
 Ocular Sentinel is an AI-powered Autonomous C4ISR Security System that combines the speed of edge detection with the deep reasoning of cloud Vision-Language Models (VLMs). 
 
 It continuously monitors video feeds (CCTV, Dashcams, Drones) using a local **YOLO11n Edge Tripwire**, which buffers frames in memory. When a potential anomaly or threat is detected, the system compiles the buffered footage and beams it to a **Qwen2-VL** multimodal model to generate a rich, contextual incident report.
