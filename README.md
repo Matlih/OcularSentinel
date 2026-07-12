@@ -36,7 +36,7 @@ By integrating a **Vision-Language Model (VLM)** like Qwen2-VL, Ocular Sentinel 
 ## Architecture
 - **Frontend**: React (Vite) + Tailwind CSS dashboard providing a cyberpunk-styled command center.
 - **Backend**: FastAPI (Python) managing WebSockets, the YOLO inference thread, and video streaming.
-- **VLM Node**: Jupyter Notebook running the Qwen2-VL model (optimized for AMD ROCm via vLLM) exposed securely via an Ngrok tunnel.
+- **VLM Node**: Jupyter Notebook running the Qwen2-VL model (optimized for AMD ROCm via vLLM and targeted for AMD AI Notebook/AMD Instinct MI300X accelerators on the AMD Developer Cloud), exposed securely via an Ngrok tunnel.
 
 ## Quick Start
 
